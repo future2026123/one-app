@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a0a"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>ONE</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--sf:#141414;--bd:#222;--tx:#f0f0f0;--ts:#888;--ac:#fff;--rv:#e8b931;--dn:#4ade80;--fl:#f87171;--r:16px}
+html,body{height:100%;font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:center;justify-content:center;padding:24px 24px 80px;overflow-x:hidden;overflow-y:auto}
+.app{width:100%;max-width:420px;text-align:center;position:relative}
+.screen{display:none;animation:fi .4s ease}.screen.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.hero-text{font-size:28px;font-weight:900;line-height:1.4;letter-spacing:-.5px;margin-bottom:48px}
+.hero-sub{font-size:14px;color:var(--ts);margin-top:8px;font-weight:300}
+.input-group{margin-bottom:20px}
+.task-input{width:100%;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:18px 20px;font-size:17px;color:var(--tx);font-family:inherit;outline:none;transition:border-color .2s}
+.task-input::placeholder{color:#555}.task-input:focus{border-color:#444}
+.rc{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rc input[type=checkbox]{appearance:none;width:20px;height:20px;border:2px solid #444;border-radius:6px;background:transparent;cursor:pointer;position:relative;transition:all .2s;flex-shrink:0}
+.rc input:checked{background:var(--rv);border-color:var(--rv)}
+.rc input:checked::after{content:'\2713';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:13px;color:#000;font-weight:700}
+.rc span{font-size:14px;color:var(--ts);user-select:none}
+.btn{width:100%;padding:18px;border:none;border-radius:var(--r);font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(.97)}
+.bp{background:var(--ac);color:#000}.bp:disabled{background:#333;color:#666;cursor:not-allowed;transform:none}
+.bs{background:var(--ac);color:#000}.bd{background:var(--dn);color:#000}
+.bfr{background:var(--sf);color:var(--tx);border:1px solid var(--bd)}
+.bsc{background:transparent;color:var(--ts);font-size:14px;font-weight:400;padding:12px;margin-top:8px}.bsc:hover{color:var(--tx)}
+.td{font-size:26px;font-weight:700;line-height:1.5;margin-bottom:12px;word-break:keep-all}
+.rt{display:inline-block;font-size:12px;font-weight:500;color:var(--rv);border:1px solid var(--rv);border-radius:100px;padding:4px 14px;margin-bottom:40px}
+.sl{font-size:13px;color:var(--ts);margin-bottom:32px;letter-spacing:2px;text-transform:uppercase}
+.bg{display:flex;flex-direction:column;gap:0}.ri{font-size:48px;margin-bottom:24px}.rxt{font-size:24px;font-weight:700;margin-bottom:8px}.rs{font-size:14px;color:var(--ts);font-weight:300;margin-bottom:24px}.rtr{font-size:14px;color:#555;text-decoration:line-through;margin-bottom:32px}
+.ec{margin-top:24px;padding:20px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r)}.ec p{font-size:13px;color:var(--ts);margin-bottom:12px}
+.er{display:flex;gap:8px}.er input{flex:1;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--tx);font-family:inherit;outline:none}.er input::placeholder{color:#555}
+.er button{background:var(--ac);color:#000;border:none;border-radius:10px;padding:12px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap}
+.es{font-size:13px;color:var(--dn);margin-top:12px;display:none}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;padding:24px;animation:fi .2s ease}.mo.active{display:flex}
+.ml{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:28px 24px;width:100%;max-width:400px}
+.mt{font-size:16px;font-weight:700;margin-bottom:6px}.mw{font-size:13px;color:var(--fl);margin-bottom:20px}.ml .task-input{margin-bottom:16px}
+.mb{display:flex;gap:10px}.mb .btn{flex:1;padding:14px;font-size:15px}.bc{background:transparent;color:var(--ts);border:1px solid var(--bd)}
+.apo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:24px}.apo.active{display:flex}
+.ap{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:32px 24px;width:100%;max-width:360px;text-align:center}
+.apt{font-size:18px;font-weight:700;margin-bottom:8px}.apd{font-size:14px;color:var(--ts);margin-bottom:24px}.ap .btn{margin-bottom:8px}
+.bra{background:var(--rv);color:#000}.bnn{background:transparent;color:var(--ts);font-size:14px;font-weight:400;padding:12px}
+.ab{position:fixed;bottom:0;left:0;right:0;background:var(--sf);border-top:1px solid var(--bd);padding:12px 20px;text-align:center;z-index:50;display:flex;align-items:center;justify-content:center;gap:8px}
+.ab.hidden{display:none}.ab a{color:var(--ts);text-decoration:none;font-size:13px;transition:color .2s}.ab a:hover{color:var(--tx)}
+.abl{font-size:10px;color:#444;text-transform:uppercase;letter-spacing:1px}
+.dd{position:fixed;bottom:56px;left:50%;transform:translateX(-50%);font-size:12px;color:#333;letter-spacing:1px;transition:bottom .2s}.dd.nb{bottom:20px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}.pulse{animation:pulse 2s ease-in-out infinite}
+</style></head><body>
+<div class="app">
+<div id="se" class="screen"><div class="hero-text">오늘,<br>하나만 하면 된다<div class="hero-sub">나머지는 버려도 된다</div></div>
+<div class="input-group"><input type="text" id="ti" class="task-input" placeholder="오늘 가장 중요한 1개" maxlength="100" autocomplete="off"></div>
+<label class="rc"><input type="checkbox" id="rc"><span>수익과 연결됨</span></label>
+<button class="btn bp" id="bc" disabled>확정</button></div>
+<div id="si" class="screen"><div class="sl">준비됨</div><div class="td" id="dt"></div><div id="rvt" class="rt" style="display:none">수익 연결됨</div>
+<div class="bg"><button class="btn bs" id="bst">시작</button><button class="btn bsc" id="be">수정</button></div></div>
+<div id="sp" class="screen"><div class="sl pulse">진행 중</div><div class="td" id="dtp"></div><div id="rvtp" class="rt" style="display:none">수익 연결됨</div>
+<div class="bg"><button class="btn bd" id="bdn">완료</button></div></div><div id="sd" class="screen"><div class="ri">✦</div><div class="rxt">오늘은 충분하다</div><div class="rs">딱 하나만 하면 된다</div><div class="rtr" id="dr"></div>
+<div class="ec" id="ecl"><p>새 앱 출시 소식을 받으시겠습니까?</p><div class="er"><input type="email" id="ei" placeholder="your@email.com"><button id="bn">알림</button></div><div class="es" id="esn">감사합니다!</div></div></div>
+<div id="sf" class="screen"><div class="ri" style="color:var(--fl)">—</div><div class="rxt">오늘은 놓쳤다</div><div class="rs">괜찮다. 내일 다시 하나만.</div><div class="rtr" id="fr"></div>
+<button class="btn bfr" id="br">다시 시작</button></div></div>
+<div class="mo" id="em"><div class="ml"><div class="mt">작업 수정</div><div class="mw">정말 바꿀거야? 이건 회피일 수도 있음</div>
+<input type="text" id="edi" class="task-input" maxlength="100" autocomplete="off"><div class="mb"><button class="btn bc" id="bec">취소</button><button class="btn bp" id="bes">변경</button></div></div></div>
+<div class="apo" id="apo"><div class="ap"><div class="apt">Enjoying ONE?</div><div class="apd">Go ad-free for $1.99</div>
+<button class="btn bra" id="bra">Remove Ads — $1.99</button><button class="btn bnn" id="bnn">Not now</button></div></div>
+<div class="ab" id="ab"><span class="abl">by SystemLab</span><a href="#" id="cpl">Try our other apps →</a></div>
+<div class="dd" id="ddp"></div>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id),today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},SK='ONE_TASK';
+(function(){const p=new URLSearchParams(location.search);if(p.get('admin')==='systemlab'){localStorage.setItem('paid','true');history.replaceState({},'',location.pathname)}})();
+(function(){const p=new URLSearchParams(location.search);if(p.get('paid')==='true'){localStorage.setItem('paid','true');history.replaceState({},'',location.pathname)}})();
+const isPaid=()=>localStorage.getItem('paid')==='true';
+function incUse(){const n=parseInt(localStorage.getItem('useCount')||'0',10);localStorage.setItem('useCount',String(n+1));return n+1}
+function getUse(){return parseInt(localStorage.getItem('useCount')||'0',10)}
+function updateAd(){const b=$('ab'),d=$('ddp');if(isPaid()){b.classList.add('hidden');d.classList.add('nb');document.body.style.paddingBottom='24px'}else{b.classList.remove('hidden');d.classList.remove('nb');document.body.style.paddingBottom='80px'}}
+function maybeAd(){if(isPaid())return;const c=getUse();if(c>0&&c%3===0)$('apo').classList.add('active')}
+function load(){try{const r=localStorage.getItem(SK);if(!r)return null;return JSON.parse(r)}catch{return null}}
+function save(d){localStorage.setItem(SK,JSON.stringify(d))}function clear(){localStorage.removeItem(SK)}
+const S=['se','si','sp','sd','sf'];function show(id){S.forEach(s=>$(s).classList.remove('active'));requestAnimationFrame(()=>$(id).classList.add('active'))}
+function updateDate(){const d=new Date(),days=['일','월','화','수','목','금','토'];$('ddp').textContent=d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0')+' '+days[d.getDay()]}
+function render(){updateDate();updateAd();const data=load();if(!data){show('se');$('ti').value='';$('rc').checked=false;$('bc').disabled=true;return}
+if(data.date!==today()){if(data.task.status==='done'){clear();show('se');$('ti').value='';$('rc').checked=false;$('bc').disabled=true;return}else{data.task.status='failed';save(data)}}
+const t=data.task;switch(t.status){case'idle':$('dt').textContent=t.text;$('rvt').style.display=t.isRevenue?'':'none';$('be').style.display=t.edited?'none':'';show('si');break;
+case'in_progress':$('dtp').textContent=t.text;$('rvtp').style.display=t.isRevenue?'':'none';show('sp');break;
+case'done':$('dr').textContent=t.text;if(localStorage.getItem('emailSubmitted')==='true')$('ecl').style.display='none';show('sd');break;
+case'failed':$('fr').textContent=t.text;show('sf');break}}
+$('ti').addEventListener('input',function(){$('bc').disabled=!this.value.trim()});
+$('ti').addEventListener('keydown',function(e){if(e.key==='Enter'&&this.value.trim())$('bc').click()});
+$('bc').addEventListener('click',function(){const t=$('ti').value.trim();if(!t)return;incUse();save({date:today(),task:{text:t,status:'idle',isRevenue:$('rc').checked,edited:false}});render();maybeAd()});
+$('bst').addEventListener('click',function(){const d=load();if(!d)return;d.task.status='in_progress';save(d);render()});
+$('bdn').addEventListener('click',function(){const d=load();if(!d)return;d.task.status='done';save(d);render()});
+$('br').addEventListener('click',function(){clear();incUse();render();maybeAd()});
+$('be').addEventListener('click',function(){const d=load();if(!d)return;$('edi').value=d.task.text;$('em').classList.add('active');$('edi').focus()});
+$('bec').addEventListener('click',()=>$('em').classList.remove('active'));
+$('em').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')});
+$('bes').addEventListener('click',function(){const t=$('edi').value.trim();if(!t)return;const d=load();if(!d)return;d.task.text=t;d.task.edited=true;save(d);$('em').classList.remove('active');render()});
+$('edi').addEventListener('keydown',function(e){if(e.key==='Enter'&&this.value.trim())$('bes').click()});
+$('bra').addEventListener('click',function(){$('apo').classList.remove('active');alert('Lemon Squeezy 결제 URL을 설정하세요.')});
+$('bnn').addEventListener('click',()=>$('apo').classList.remove('active'));
+$('apo').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')});
+$('bn').addEventListener('click',function(){const em=$('ei').value.trim();if(!em||!em.includes('@'))return;
+fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,app:'ONE',date:today()})}).catch(()=>{});
+localStorage.setItem('emailSubmitted','true');$('ei').style.display='none';$('bn').style.display='none';$('esn').style.display='block'});
+render();let ld=today();setInterval(()=>{const n=today();if(n!==ld){ld=n;render()}updateDate()},60000);
+})();
+</script></body></html>
